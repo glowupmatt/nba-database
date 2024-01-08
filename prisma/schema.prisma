@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Players {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  player    Player[] @relation("Player")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Player {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  playerName  String
+  age         String
+  playerImage String
+
+  totalStats TotalStats[] @relation("TotalStats")
+  games      Game[]       @relation("Games")
+
+  players   Players @relation("Player", fields: [playersId], references: [id], onDelete: Cascade)
+  playersId String  @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Game {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  minutesPlayed       String
+  fieldGoals          String
+  fieldGoalAttempts   String
+  fieldGoalPercentage String
+  threePointers       String
+  twoPointers         String
+  totalRebounds       String
+  assists             String
+  blocks              String
+  turnovers           String
+  points              String
+
+  player   Player @relation("Games", fields: [playerId], references: [id], onDelete: Cascade)
+  playerId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+}
+
+model TotalStats {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  totalGamesPlayed    String
+  totalGamesStarted   String
+  minutesPlayed       String
+  fieldGoals          String
+  fieldGoalAttempts   String
+  fieldGoalPercentage String
+  threePointers       String
+  twoPointers         String
+  totalRebounds       String
+  assists             String
+  blocks              String
+  turnovers           String
+  points              String
+
+  player   Player @relation("TotalStats", fields: [playerId], references: [id], onDelete: Cascade)
+  playerId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
