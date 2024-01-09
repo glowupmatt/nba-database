@@ -1,6 +1,7 @@
 const cheerio = require("cheerio");
+const fs = require("fs");
 
-const getJson = async () => {
+const getJsonDataTotal = async () => {
   const dataSelectors = [
     { name: "playerName", selector: "td[csk]" },
     { name: "age", selector: "td[data-stat='age']" },
@@ -20,29 +21,7 @@ const getJson = async () => {
     { name: "playerImage", selector: "td[data-append-csv]" },
   ];
 
-  let tableData = [
-    {
-      playerName: "",
-      age: "",
-      totalGamesPlayed: "",
-      totalGamesStarted: "",
-      minutesPlayed: "",
-      fieldGoals: "",
-      fieldGoalAttempts: "",
-      fieldGoalPercentage: "",
-      threePointers: "",
-      twoPointers: "",
-      totalRebounds: "",
-      assists: "",
-      blocks: "",
-      turnovers: "",
-      points: "",
-      playerImage: "",
-    },
-  ];
-  // const data = (
-  //   await fetch("http://localhost:3000/htmlData/siteHtml.html")
-  // ).text();
+  let tableData = [];
   const data = (
     await fetch(
       "https://www.basketball-reference.com/leagues/NBA_2024_totals.html"
@@ -71,9 +50,15 @@ const getJson = async () => {
       tableData.push(player);
     }
   });
+
   tableData = tableData.filter((player) => Object.keys(player).length !== 0);
 
-  return tableData;
+  //   const json = JSON.stringify(tableData, null, 2);
+  //   fs.writeFile(`public/playerData/playerDataTotal.json`, json, (err) => {
+  //     if (err) throw err;
+  //     console.log("The file has been saved!");
+  //   });
+  return JSON.stringify(tableData, null, 2);
 };
-
-module.exports = { getJson };
+getJsonDataTotal();
+module.exports = { getJsonDataTotal };

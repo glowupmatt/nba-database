@@ -1,6 +1,6 @@
 export const getAllPlayers = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/allPlayers/${id}`, {
+    const response = await fetch(`http://localhost:3000/api/getPlayer/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

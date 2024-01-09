@@ -1,14 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
-import { getJson } from "@/utils/htmlFormatter";
 import { playerType } from "@/utils/playersType";
 import { getAllPlayers } from "@/crudFunctions/getAllPlayers";
 
 // export const revalidate = 86400;
 
 export default async function Home() {
-  const data = await getAllPlayers(process.env.PLAYER_ID_KEY as string);
-  const players = data.player;
+  const players = await getAllPlayers(process.env.PLAYER_ID_KEY as string);
+  console.log(players);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <header className="flex flex-col items-center justify-center">

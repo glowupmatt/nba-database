@@ -29,7 +29,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/crudFunctions/postAllPlayersToDb.js",
-    "src/utils/htmlFormatter.js"
+    "src/utils/getJsonDataPerGame.js"
   ],
   "exclude": ["node_modules"]
 }
