@@ -52,7 +52,7 @@ export const PUT = async (
       points,
     } = body;
 
-    const player: any = await prisma.player.findUnique({
+    const player: any = await prisma.player.update({
       where: {
         id: playerId,
       },
@@ -65,39 +65,43 @@ export const PUT = async (
       totalStatsId = player.totalStats[0].id;
     }
 
-    const totalStats = await prisma.totalStats.upsert({
+    const totalStats = await prisma.totalStats.update({
       where: {
         id: totalStatsId,
       },
-      update: {
-        totalGamesPlayed,
-        totalGamesStarted,
-        minutesPlayed,
-        fieldGoals,
-        fieldGoalAttempts,
-        fieldGoalPercentage,
-        threePointers,
-        twoPointers,
-        totalRebounds,
-        assists,
-        blocks,
-        turnovers,
-        points,
-      },
-      create: {
-        totalGamesPlayed,
-        totalGamesStarted,
-        minutesPlayed,
-        fieldGoals,
-        fieldGoalAttempts,
-        fieldGoalPercentage,
-        threePointers,
-        twoPointers,
-        totalRebounds,
-        assists,
-        blocks,
-        turnovers,
-        points,
+      data: {
+        upsert: {
+          update: {
+            totalGamesPlayed,
+            totalGamesStarted,
+            minutesPlayed,
+            fieldGoals,
+            fieldGoalAttempts,
+            fieldGoalPercentage,
+            threePointers,
+            twoPointers,
+            totalRebounds,
+            assists,
+            blocks,
+            turnovers,
+            points,
+          },
+          create: {
+            totalGamesPlayed,
+            totalGamesStarted,
+            minutesPlayed,
+            fieldGoals,
+            fieldGoalAttempts,
+            fieldGoalPercentage,
+            threePointers,
+            twoPointers,
+            totalRebounds,
+            assists,
+            blocks,
+            turnovers,
+            points,
+          },
+        },
       },
     });
     return new NextResponse(JSON.stringify(totalStats), {
