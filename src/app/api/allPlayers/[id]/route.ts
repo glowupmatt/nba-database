@@ -26,6 +26,7 @@ export const DELETE = async (
 ) => {
   try {
     const { id } = params;
+    console.log(id, "ID");
     const players = await prisma.players.delete({
       where: {
         id,

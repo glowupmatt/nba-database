@@ -6,6 +6,7 @@ export const GET = async () => {
     const players = await prisma.player.findMany({
       include: {
         games: true,
+        totalStats: true,
       },
     });
     return new NextResponse(JSON.stringify(players), { status: 200 });

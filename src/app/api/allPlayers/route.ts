@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
-    console.log(body, "BODY");
+
     const players = await prisma.players.create({
       data: {
         player: {

@@ -1,5 +1,4 @@
 const cheerio = require("cheerio");
-const fs = require("fs");
 
 const getJsonDataTotal = async () => {
   const dataSelectors = [
@@ -53,12 +52,7 @@ const getJsonDataTotal = async () => {
 
   tableData = tableData.filter((player) => Object.keys(player).length !== 0);
 
-  //   const json = JSON.stringify(tableData, null, 2);
-  //   fs.writeFile(`public/playerData/playerDataTotal.json`, json, (err) => {
-  //     if (err) throw err;
-  //     console.log("The file has been saved!");
-  //   });
-  return JSON.stringify(tableData, null, 2);
+  return tableData;
 };
-getJsonDataTotal();
+console.log(getJsonDataTotal());
 module.exports = { getJsonDataTotal };

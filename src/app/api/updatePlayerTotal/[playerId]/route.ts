@@ -52,7 +52,7 @@ export const PUT = async (
       points,
     } = body;
 
-    const player: any = await prisma.player.update({
+    const player = await prisma.player.findUnique({
       where: {
         id: playerId,
       },
@@ -60,48 +60,60 @@ export const PUT = async (
         totalStats: true,
       },
     });
+    console.log(
+      player,
+      `-------------------
+      -------------------
+      PLAYER
+      -------------------
+      -------------------`
+    );
     let totalStatsId;
     if (player && player.totalStats) {
       totalStatsId = player.totalStats[0].id;
     }
+    console.log(
+      totalStatsId,
+      `-------------------
+      -------------------
+      TOTAL STATS ID
+      -------------------
+      -------------------`
+    );
 
-    const totalStats = await prisma.totalStats.update({
+    const totalStats = await prisma.player.upsert({
       where: {
         id: totalStatsId,
       },
-      data: {
-        upsert: {
-          update: {
-            totalGamesPlayed,
-            totalGamesStarted,
-            minutesPlayed,
-            fieldGoals,
-            fieldGoalAttempts,
-            fieldGoalPercentage,
-            threePointers,
-            twoPointers,
-            totalRebounds,
-            assists,
-            blocks,
-            turnovers,
-            points,
-          },
-          create: {
-            totalGamesPlayed,
-            totalGamesStarted,
-            minutesPlayed,
-            fieldGoals,
-            fieldGoalAttempts,
-            fieldGoalPercentage,
-            threePointers,
-            twoPointers,
-            totalRebounds,
-            assists,
-            blocks,
-            turnovers,
-            points,
-          },
-        },
+      update: {
+        totalGamesPlayed,
+        totalGamesStarted,
+        minutesPlayed,
+        fieldGoals,
+        fieldGoalAttempts,
+        fieldGoalPercentage,
+        threePointers,
+        twoPointers,
+        totalRebounds,
+        assists,
+        blocks,
+        turnovers,
+        points,
+      },
+      create: {
+        totalGamesPlayed,
+        totalGamesStarted,
+        minutesPlayed,
+        fieldGoals,
+        fieldGoalAttempts,
+        fieldGoalPercentage,
+        threePointers,
+        twoPointers,
+        totalRebounds,
+        assists,
+        blocks,
+        turnovers,
+        points,
       },
     });
     return new NextResponse(JSON.stringify(totalStats), {

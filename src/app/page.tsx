@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import { playerType } from "@/utils/playersType";
 import { getAllPlayers } from "@/crudFunctions/getAllPlayers";
 
@@ -7,7 +6,7 @@ import { getAllPlayers } from "@/crudFunctions/getAllPlayers";
 
 export default async function Home() {
   const players = await getAllPlayers(process.env.PLAYER_ID_KEY as string);
-  console.log(players);
+  // console.log(players);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <header className="flex flex-col items-center justify-center">
@@ -15,7 +14,7 @@ export default async function Home() {
         <p className="text-xl">List of all players</p>
       </header>
       <section className="flex flex-wrap justify-center items-center">
-        {players.map((player: playerType) => (
+        {/* {players.map((player: playerType) => (
           <div
             key={+player.age}
             className="flex flex-col items-center justify-center m-4"
@@ -27,7 +26,7 @@ export default async function Home() {
             />
             <h2 className="text-2xl font-bold">{player.playerName}</h2>
           </div>
-        ))}
+        ))} */}
       </section>
     </main>
   );

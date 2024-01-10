@@ -24,13 +24,12 @@ model Player {
   age         String
   playerImage String
 
-  totalStats TotalStats? @relation
-  totalStatsId String? @db.ObjectId
-
-  games      Game[]       @relation("Games")
-
   players   Players @relation("Player", fields: [playersId], references: [id], onDelete: Cascade)
   playersId String  @db.ObjectId
+
+  totalStats TotalStats[] @relation("TotalStats")
+  games      Game[]       @relation("Games")
+
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,6 +52,7 @@ model Game {
 
   player   Player @relation("Games", fields: [playerId], references: [id], onDelete: Cascade)
   playerId String @db.ObjectId
+  
 
   createdAt DateTime @default(now())
 }
@@ -74,8 +74,8 @@ model TotalStats {
   turnovers           String
   points              String
 
-  player   Player? @relation(fields: [playerId], references: [id])
-  playerId String @db.ObjectId @unique
+  player   Player @relation("TotalStats", fields: [playerId], references: [id], onDelete: Cascade)
+  playerId String @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
