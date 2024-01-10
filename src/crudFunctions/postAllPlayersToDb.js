@@ -8,6 +8,8 @@ const getAllPlayers = async () => {
         playerName: player.playerName,
         age: player.age,
         playerImage: player.playerImage,
+        totalStatsId: player.totalStatsId,
+        games: player.games,
       }));
       const response = await fetch("http://localhost:3000/api/allPlayers", {
         method: "POST",
