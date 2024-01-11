@@ -1,19 +1,13 @@
+const axios = require("axios");
 const deleteAllPlayers = async (playerId) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/allPlayers/${playerId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await axios.delete(
+      `http://localhost:3000/api/all-players/${playerId}`
     );
-    const data = await response.json();
-    console.log(data, "JS FILE");
+    const data = await response;
     return data;
   } catch (err) {
     console.log(err);
   }
 };
-deleteAllPlayers("659e17cfa231231baf22b0d8");
+deleteAllPlayers("659e2726df4546fb353a47f4");

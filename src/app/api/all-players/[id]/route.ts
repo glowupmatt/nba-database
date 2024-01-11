@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import prisma from "@/utils/prismaDb";
-import { playerType } from "@/utils/playersType";
 
-export const GET = async (request: Request, { params }: any) => {
-  console.log(params, "ID");
+export const GET = async (
+  request: Request,
+  { params }: { params: { id: string } }
+) => {
   try {
     const { id } = params;
     const players = await prisma.players.findUnique({

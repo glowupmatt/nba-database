@@ -1,20 +1,20 @@
-import { playerType } from "@/utils/playersType";
+import { PlayerType } from "@/types/playersType";
+import { getJsonDataTotal } from "@/utils/getJsonTotalStats";
+import { GameType } from "@/types/playersType";
+import axios from "axios";
 
-export const updatePlayerGames = async (playerId: string, body: playerType) => {
+export const updatePlayerGames = async (playerId: string, body: GameType) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/getPlayer/${playerId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      }
+    console.log({ body }, "PLAYER ID ON UPDATE PLAYER GAMES");
+    const response = await axios.put(
+      `http://localhost:3000/api/get-player/${playerId}`,
+      body
     );
-    const data = await response.json();
+    const data = response;
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERROR ON UPDATE PLAYER GAMES");
+  } finally {
+    console.log("FINALLY ON UPDATE PLAYER GAMES");
   }
 };

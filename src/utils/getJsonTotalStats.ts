@@ -1,4 +1,5 @@
-const cheerio = require("cheerio");
+import { JSDOM } from "jsdom";
+import axios from "axios";
 
 const getJsonDataTotal = async () => {
   const dataSelectors = [
@@ -20,39 +21,35 @@ const getJsonDataTotal = async () => {
     { name: "playerImage", selector: "td[data-append-csv]" },
   ];
 
-  let tableData = [];
-  const data = (
-    await fetch(
-      "https://www.basketball-reference.com/leagues/NBA_2024_totals.html"
-    )
-  ).text();
-  const $ = cheerio.load(await data);
-  $("table tbody tr").each((i, row) => {
-    let player = {};
+  const tableData: any[] = [];
+  const response = await axios.get(
+    "https://www.basketball-reference.com/leagues/NBA_2024_totals.html"
+  );
+
+  const dom = new JSDOM(response.data);
+  const document = dom.window.document;
+  const rows = document.querySelectorAll("table tbody tr");
+
+  rows.forEach((row) => {
+    let player: { [key: string]: string } = {};
     dataSelectors.forEach((dataSelector) => {
-      $(row)
-        .find(dataSelector.selector)
-        .each((j, cell) => {
-          const data = $(cell).text().trim();
-          if (data) {
-            player[dataSelector.name] = data;
-          }
-          if (dataSelector.name === "playerImage") {
-            const playerId = $(cell).attr("data-append-csv");
-            player[
-              dataSelector.name
-            ] = `https://www.basketball-reference.com/req/202106291/images/headshots/${playerId}.jpg`;
-          }
-        });
+      const cell = row.querySelector(dataSelector.selector);
+      const data = cell?.textContent?.trim();
+      if (data) {
+        player[dataSelector.name] = data;
+      }
+      if (dataSelector.name === "playerImage") {
+        const playerId = cell?.getAttribute("data-append-csv");
+        player[
+          dataSelector.name
+        ] = `https://www.basketball-reference.com/req/202106291/images/headshots/${playerId}.jpg`;
+      }
     });
     if (Object.keys(player).length !== 0) {
       tableData.push(player);
     }
   });
 
-  tableData = tableData.filter((player) => Object.keys(player).length !== 0);
-
   return tableData;
 };
-console.log(getJsonDataTotal());
-module.exports = { getJsonDataTotal };
+export { getJsonDataTotal };

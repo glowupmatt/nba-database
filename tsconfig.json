@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/crudFunctions/postAllPlayersToDb.js",
-    "src/utils/getJsonDataPerGame.js"
+    "src/utils/getJsonDataPerGame.ts",
+    "src/crudFunctions/getJsonTotalStats.js"
   ],
   "exclude": ["node_modules"]
 }

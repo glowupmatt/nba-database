@@ -1,12 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import { playerType } from "@/utils/playersType";
+import { PlayerType } from "@/types/playersType";
 import { getAllPlayers } from "@/crudFunctions/getAllPlayers";
+import { getJsonDataTotal } from "@/utils/getJsonTotalStats";
+import { dailyUpdateCall } from "@/utils/dailyUpdateCall";
 
 // export const revalidate = 86400;
 
 export default async function Home() {
-  const players = await getAllPlayers("659e2726df4546fb353a47f4");
-  // console.log(players);
+  const players: Promise<PlayerType[]> = await getAllPlayers();
+  // await dailyUpdateCall();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <header className="flex flex-col items-center justify-center">
@@ -14,19 +17,21 @@ export default async function Home() {
         <p className="text-xl">List of all players</p>
       </header>
       <section className="flex flex-wrap justify-center items-center">
-        {players.map((player: playerType) => (
-          <div
-            key={+player.age}
-            className="flex flex-col items-center justify-center m-4"
-          >
-            <img
-              src={player.playerImage}
-              alt={player.playerName}
-              className="rounded-full"
-            />
-            <h2 className="text-2xl font-bold">{player.playerName}</h2>
-          </div>
-        ))}
+        {(await players).map((player: PlayerType, index: number) => {
+          return (
+            <div
+              key={player.playerName + index}
+              className="flex flex-col items-center justify-center m-4"
+            >
+              <img
+                src={player.playerImage}
+                alt={player.playerName}
+                className="rounded-full"
+              />
+              <h2 className="text-2xl font-bold">{player.playerName}</h2>
+            </div>
+          );
+        })}
       </section>
     </main>
   );
