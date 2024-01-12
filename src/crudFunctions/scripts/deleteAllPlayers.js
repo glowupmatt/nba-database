@@ -10,4 +10,4 @@ const deleteAllPlayers = async (playerId) => {
     console.log(err);
   }
 };
-deleteAllPlayers("659e2726df4546fb353a47f4");
+deleteAllPlayers("65a086503ce01907773917b2");

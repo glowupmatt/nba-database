@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { PlayerType } from "@/types/playersType";
 import { getAllPlayers } from "@/crudFunctions/getAllPlayers";
-import { getJsonDataTotal } from "@/utils/getJsonTotalStats";
 import { dailyUpdateCall } from "@/utils/dailyUpdateCall";
 
 // export const revalidate = 86400;
@@ -18,6 +17,7 @@ export default async function Home() {
       </header>
       <section className="flex flex-wrap justify-center items-center">
         {(await players).map((player: PlayerType, index: number) => {
+          console.log(player);
           return (
             <div
               key={player.playerName + index}

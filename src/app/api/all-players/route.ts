@@ -4,8 +4,6 @@ import { NextResponse } from "next/server";
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
-    console.log(body, "BODY");
-
     const players = await prisma.players.create({
       data: {
         player: {
@@ -25,6 +23,7 @@ export const POST = async (request: Request) => {
         },
       },
     });
+    console.log("SUCCESS", { status: 200 });
     return new NextResponse(JSON.stringify(players), { status: 200 });
   } catch (err) {
     console.log(err, "ROUTE ERROR");

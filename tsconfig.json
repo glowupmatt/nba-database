@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/crudFunctions/postAllPlayersToDb.js",
+    "src/crudFunctions/scripts/postAllPlayersToDb.js",
     "src/utils/getJsonDataPerGame.ts",
     "src/crudFunctions/getJsonTotalStats.js"
   ],

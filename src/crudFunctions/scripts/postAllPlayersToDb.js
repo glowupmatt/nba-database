@@ -1,4 +1,5 @@
 const { getJsonDataTotalForScript } = require("./getJsonTotalStatsForScript");
+const axios = require("axios");
 
 const getAllPlayers = async () => {
   const players = await getJsonDataTotalForScript();
@@ -14,13 +15,11 @@ const getAllPlayers = async () => {
           games: [],
         }));
 
-      const response = await fetch("http://localhost:3000/api/all-players", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(playerData),
-      });
-      const data = await response;
-      return data;
+      const response = await axios.post(
+        "http://localhost:3000/api/all-players",
+        playerData
+      );
+      return response.data;
     } catch (err) {
       console.log(err, "PAGE ERROR");
     }

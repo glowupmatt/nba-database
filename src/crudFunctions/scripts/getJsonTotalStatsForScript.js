@@ -28,7 +28,7 @@ const getJsonDataTotalForScript = async () => {
 
   const dom = new JSDOM(response.data);
   const document = dom.window.document;
-  const rows = document.querySelectorAll("table tbody tr");
+  const rows = document.querySelectorAll("table tbody tr:not(.partial_table)");
 
   rows.forEach((row) => {
     let player = {};

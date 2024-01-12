@@ -9,6 +9,7 @@ export const GET = async (request: Request) => {
         totalStats: true,
       },
     });
+    console.log("SUCCESS", { status: 200 });
     return new NextResponse(JSON.stringify(players), { status: 200 });
   } catch (err) {
     console.log(err, "ROUTE ERROR");
@@ -55,6 +56,7 @@ export const PUT = async (request: Request) => {
         },
       },
     });
+    console.log("SUCCESS", { status: 200 });
     return new NextResponse(JSON.stringify(player), { status: 200 });
   } catch (err) {
     console.log(err, "ROUTE ERROR");

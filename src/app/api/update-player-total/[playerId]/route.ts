@@ -1,126 +1,75 @@
-// import { NextResponse } from "next/server";
-// import prisma from "@/utils/prismaDb";
+import { NextResponse } from "next/server";
+import prisma from "@/utils/prismaDb";
 
-// type PlayerType = {
-//   id: string;
-//   playerName: string;
-//   age: string;
-//   playerImage: string;
-//   playersId: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   totalStats: {
-//     id: string;
-//     totalGamesPlayed: string;
-//     totalGamesStarted: string;
-//     minutesPlayed: string;
-//     fieldGoals: string;
-//     fieldGoalAttempts: string;
-//     fieldGoalPercentage: string;
-//     threePointers: string;
-//     twoPointers: string;
-//     totalRebounds: string;
-//     assists: string;
-//     blocks: string;
-//     turnovers: string;
-//     points: string;
-//     playerId: string;
-//     createdAt: Date;
-//     updatedAt: Date;
-//   }[];
-// };
-// export const PUT = async (
-//   request: Request,
-//   { params }: { params: { playerId: string } }
-// ) => {
-//   try {
-//     const { playerId } = params;
-//     const body = await request.json();
-//     const {
-//       totalGamesPlayed,
-//       totalGamesStarted,
-//       minutesPlayed,
-//       fieldGoals,
-//       fieldGoalAttempts,
-//       fieldGoalPercentage,
-//       threePointers,
-//       twoPointers,
-//       totalRebounds,
-//       assists,
-//       blocks,
-//       turnovers,
-//       points,
-//     } = body;
+export const PUT = async (
+  request: Request,
+  { params }: { params: { playerId: string } }
+) => {
+  try {
+    const { playerId } = params;
+    const body = await request.json();
+    const {
+      totalGamesPlayed,
+      totalGamesStarted,
+      minutesPlayed,
+      fieldGoals,
+      fieldGoalAttempts,
+      fieldGoalPercentage,
+      threePointers,
+      twoPointers,
+      totalRebounds,
+      assists,
+      blocks,
+      turnovers,
+      points,
+    } = body;
+    console.log(body, "BODY");
+    const player = await prisma.player.findUnique({
+      where: {
+        id: playerId,
+      },
+      include: {
+        totalStats: true,
+      },
+    });
 
-//     const player = await prisma.player.findUnique({
-//       where: {
-//         id: playerId,
-//       },
-//       include: {
-//         totalStats: true,
-//       },
-//     });
-//     console.log(
-//       player,
-//       `-------------------
-//       -------------------
-//       PLAYER
-//       -------------------
-//       -------------------`
-//     );
-//     let totalStatsId;
-//     if (player && player.totalStats) {
-//       totalStatsId = player.totalStats[0].id;
-//     }
-//     console.log(
-//       totalStatsId,
-//       `-------------------
-//       -------------------
-//       TOTAL STATS ID
-//       -------------------
-//       -------------------`
-//     );
-
-//     const totalStats = await prisma.player.upsert({
-//       where: {
-//         id: totalStatsId,
-//       },
-//       update: {
-//         totalGamesPlayed,
-//         totalGamesStarted,
-//         minutesPlayed,
-//         fieldGoals,
-//         fieldGoalAttempts,
-//         fieldGoalPercentage,
-//         threePointers,
-//         twoPointers,
-//         totalRebounds,
-//         assists,
-//         blocks,
-//         turnovers,
-//         points,
-//       },
-//       create: {
-//         totalGamesPlayed,
-//         totalGamesStarted,
-//         minutesPlayed,
-//         fieldGoals,
-//         fieldGoalAttempts,
-//         fieldGoalPercentage,
-//         threePointers,
-//         twoPointers,
-//         totalRebounds,
-//         assists,
-//         blocks,
-//         turnovers,
-//         points,
-//       },
-//     });
-//     return new NextResponse(JSON.stringify(totalStats), {
-//       status: 200,
-//     });
-//   } catch (err) {
-//     console.log(err, "ROUTE ERROR");
-//     return new NextResponse(JSON.stringify(err), { status: 500 });
-//   }
-// };
+    const newStats = {
+      totalGamesPlayed,
+      totalGamesStarted: totalGamesStarted || "0",
+      minutesPlayed,
+      fieldGoals,
+      fieldGoalAttempts,
+      fieldGoalPercentage,
+      threePointers,
+      twoPointers,
+      totalRebounds,
+      assists,
+      blocks,
+      turnovers,
+      points,
+      player: {
+        connect: {
+          id: playerId,
+        },
+      },
+    };
+    if (!player?.totalStats[0]) {
+      const totalStats = await prisma.totalStats.create({
+        data: newStats,
+      });
+      return new NextResponse(JSON.stringify(totalStats), { status: 200 });
+    }
+    if (JSON.stringify(player?.totalStats[0]) !== JSON.stringify(newStats)) {
+      const totalStats = await prisma.totalStats.update({
+        where: {
+          id: player?.totalStats[0].id,
+        },
+        data: newStats,
+      });
+      return new NextResponse(JSON.stringify(totalStats), { status: 200 });
+    }
+  } catch (err) {
+    console.log(err, "ROUTE ERROR");
+    return new NextResponse(JSON.stringify(err), { status: 500 });
+  }
+};

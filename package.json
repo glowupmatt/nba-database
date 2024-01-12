@@ -7,11 +7,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "getJsonPergame": "node ./src/utils/getJsonDataPerGame",
-    "getJsonTotalStats": "node ./src/utils/getJsonTotalStats",
-    "postallplayers": "node ./src/crudFunctions/postAllPlayersToDb",
-    "getallplayers": "node ./src/crudFunctions/getAllPlayers",
-    "deletePlayers": "node ./src/crudFunctions/deleteAllPlayers"
+    "postallplayers": "node ./src/crudFunctions/scripts/postAllPlayersToDb",
+    "deletePlayers": "node ./src/crudFunctions/scripts/deleteAllPlayers"
   },
   "dependencies": {
     "@prisma/client": "^5.8.0",

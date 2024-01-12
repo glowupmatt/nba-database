@@ -16,7 +16,7 @@ export type GameType = {
 };
 
 export type TotalStatsType = {
-  id: string;
+  playerName?: string;
   totalGamesPlayed: string;
   totalGamesStarted: string;
   minutesPlayed: string;
@@ -30,8 +30,7 @@ export type TotalStatsType = {
   blocks: string;
   turnovers: string;
   points: string;
-  playerId: string;
-  createdAt: string;
+  playerId?: string;
 };
 
 export type PlayerType = {
@@ -49,6 +48,8 @@ export type PlayerType = {
 export type JsonPlayerType = {
   playerName: string;
   minutesPlayed: string;
+  totalGamesPlayed: string;
+  totalGamesStarted: string;
   fieldGoals: string;
   fieldGoalAttempts: string;
   fieldGoalPercentage: string;
@@ -59,4 +60,40 @@ export type JsonPlayerType = {
   blocks: string;
   turnovers: string;
   points: string;
+};
+
+export type JsonTotalStatsType = {
+  playerName: string;
+  totalGamesPlayed: string;
+  totalGamesStarted: string;
+  minutesPlayed: string;
+  fieldGoals: string;
+  fieldGoalAttempts: string;
+  fieldGoalPercentage: string;
+  threePointers: string;
+  twoPointers: string;
+  totalRebounds: string;
+  assists: string;
+  blocks: string;
+  turnovers: string;
+  points: string;
+};
+
+export type BodyType = {
+  id?: string;
+  totalGamesPlayed?: string;
+  totalGamesStarted?: string;
+  minutesPlayed: string;
+  fieldGoals: string;
+  fieldGoalAttempts: string;
+  fieldGoalPercentage: string;
+  threePointers: string;
+  twoPointers: string;
+  totalRebounds: string;
+  assists: string;
+  blocks: string;
+  turnovers: string;
+  points: string;
+  playerId?: string;
+  createdAt?: string;
 };
