@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-// import { PlayerType } from "@/types/playersType";
-// import { getAllPlayers } from "@/crudFunctions/getAllPlayers";
-// import { dailyUpdateCall } from "@/utils/dailyUpdateCall";
+import { PlayerType } from "@/types/playersType";
+import { getAllPlayers } from "@/crudFunctions/getAllPlayers";
+import { dailyUpdateCall } from "@/utils/dailyUpdateCall";
 
 // export const revalidate = 86400;
 
 export default async function Home() {
-  // const players: PlayerType[] = await getAllPlayers();
+  const players: PlayerType[] = await getAllPlayers();
   // await dailyUpdateCall();
 
   return (
@@ -15,7 +15,7 @@ export default async function Home() {
         <h1 className="text-6xl font-bold">Players</h1>
         <p className="text-xl">List of all players</p>
       </header>
-      {/* <section className="flex flex-wrap justify-center items-center">
+      <section className="flex flex-wrap justify-center items-center">
         {players.map((player: PlayerType, index: number) => {
           return (
             <div
@@ -31,7 +31,7 @@ export default async function Home() {
             </div>
           );
         })}
-      </section> */}
+      </section>
     </main>
   );
 }
