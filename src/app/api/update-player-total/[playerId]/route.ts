@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/utils/prismaDb";
 import { TotalStatsType } from "@/types/playersType";
 
-export async function createOrUpdateStats(player: any, newStats: any) {
+async function createOrUpdateStats(player: any, newStats: any) {
   if (!player?.totalStats[0]) {
     return await prisma.totalStats.create({ data: newStats });
   }
