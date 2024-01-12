@@ -16,7 +16,7 @@ const getAllPlayers = async () => {
         }));
 
       const response = await axios.post(
-        "http://localhost:3000/api/all-players",
+        `${process.env.SERVER_URL}/api/all-players`,
         playerData
       );
       return response.data;

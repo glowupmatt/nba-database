@@ -2,7 +2,7 @@ const axios = require("axios");
 const deleteAllPlayers = async (playerId) => {
   try {
     const response = await axios.delete(
-      `http://localhost:3000/api/all-players/${playerId}`
+      `${process.env.SERVER_URL}/api/all-players/${playerId}`
     );
     const data = await response;
     return data;

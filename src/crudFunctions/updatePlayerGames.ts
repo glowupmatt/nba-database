@@ -4,7 +4,7 @@ import axios from "axios";
 export const updatePlayerGames = async (playerId: string, body: GameType) => {
   try {
     const response = await axios.put(
-      `http://localhost:3000/api/get-player/${playerId}`,
+      `${process.env.SERVER_URL}/api/get-player/${playerId}`,
       body
     );
     const data = response;
