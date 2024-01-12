@@ -79,9 +79,9 @@ async function updatePlayerStats(
   };
   if (updateType === "games") {
     await updatePlayerGames(playerId, body);
-    console.log("updated games");
+    console.log(playerId, "updated games");
   } else if (updateType === "total") {
     await updatePlayerTotal(playerId, body as TotalStatsType);
-    console.log("updated total");
+    console.log(playerId, "updated total");
   }
 }

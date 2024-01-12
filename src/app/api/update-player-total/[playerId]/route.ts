@@ -1,75 +1,42 @@
 import { NextResponse } from "next/server";
 import prisma from "@/utils/prismaDb";
+import { TotalStatsType } from "@/types/playersType";
 
-export const PUT = async (
+export async function createOrUpdateStats(player: any, newStats: any) {
+  if (!player?.totalStats[0]) {
+    return await prisma.totalStats.create({ data: newStats });
+  }
+  if (JSON.stringify(player?.totalStats[0]) !== JSON.stringify(newStats)) {
+    return await prisma.totalStats.update({
+      where: { id: player?.totalStats[0].id },
+      data: newStats,
+    });
+  }
+}
+
+export async function PUT(
   request: Request,
   { params }: { params: { playerId: string } }
-) => {
+) {
   try {
     const { playerId } = params;
     const body = await request.json();
-    const {
-      totalGamesPlayed,
-      totalGamesStarted,
-      minutesPlayed,
-      fieldGoals,
-      fieldGoalAttempts,
-      fieldGoalPercentage,
-      threePointers,
-      twoPointers,
-      totalRebounds,
-      assists,
-      blocks,
-      turnovers,
-      points,
-    } = body;
-    console.log(body, "BODY");
     const player = await prisma.player.findUnique({
-      where: {
-        id: playerId,
-      },
-      include: {
-        totalStats: true,
-      },
+      where: { id: playerId },
+      include: { totalStats: true },
     });
 
-    const newStats = {
-      totalGamesPlayed,
-      totalGamesStarted: totalGamesStarted || "0",
-      minutesPlayed,
-      fieldGoals,
-      fieldGoalAttempts,
-      fieldGoalPercentage,
-      threePointers,
-      twoPointers,
-      totalRebounds,
-      assists,
-      blocks,
-      turnovers,
-      points,
-      player: {
-        connect: {
-          id: playerId,
-        },
-      },
+    const newStats: TotalStatsType = {
+      ...body,
+      totalGamesStarted: body.totalGamesStarted || "0",
+      player: { connect: { id: playerId } },
     };
-    if (!player?.totalStats[0]) {
-      const totalStats = await prisma.totalStats.create({
-        data: newStats,
-      });
-      return new NextResponse(JSON.stringify(totalStats), { status: 200 });
-    }
-    if (JSON.stringify(player?.totalStats[0]) !== JSON.stringify(newStats)) {
-      const totalStats = await prisma.totalStats.update({
-        where: {
-          id: player?.totalStats[0].id,
-        },
-        data: newStats,
-      });
-      return new NextResponse(JSON.stringify(totalStats), { status: 200 });
-    }
+
+    const totalStats = await createOrUpdateStats(player, newStats);
+
+    return new NextResponse(JSON.stringify(totalStats), { status: 200 });
   } catch (err) {
     console.log(err, "ROUTE ERROR");
     return new NextResponse(JSON.stringify(err), { status: 500 });
   }
-};
+}
