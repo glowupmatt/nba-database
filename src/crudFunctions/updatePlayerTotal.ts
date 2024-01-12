@@ -7,7 +7,7 @@ export const updatePlayerTotal = async (
 ) => {
   try {
     const response = await axios.put(
-      `http://localhost:3000/api/update-player-total/${playerId}`,
+      `/api/update-player-total/${playerId}`,
       body
     );
     const data = response;

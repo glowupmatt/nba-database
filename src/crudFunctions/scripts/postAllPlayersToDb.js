@@ -15,10 +15,7 @@ const getAllPlayers = async () => {
           games: [],
         }));
 
-      const response = await axios.post(
-        "http://localhost:3000/api/all-players",
-        playerData
-      );
+      const response = await axios.post("/api/all-players", playerData);
       return response.data;
     } catch (err) {
       console.log(err, "PAGE ERROR");
