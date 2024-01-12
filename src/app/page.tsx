@@ -6,7 +6,7 @@ import { dailyUpdateCall } from "@/utils/dailyUpdateCall";
 // export const revalidate = 86400;
 
 export default async function Home() {
-  const players: Promise<PlayerType[]> = await getAllPlayers();
+  // const players: Promise<PlayerType[]> = await getAllPlayers();
   // await dailyUpdateCall();
 
   return (
@@ -15,7 +15,7 @@ export default async function Home() {
         <h1 className="text-6xl font-bold">Players</h1>
         <p className="text-xl">List of all players</p>
       </header>
-      <section className="flex flex-wrap justify-center items-center">
+      {/* <section className="flex flex-wrap justify-center items-center">
         {(await players).map((player: PlayerType, index: number) => {
           console.log(player);
           return (
@@ -32,7 +32,7 @@ export default async function Home() {
             </div>
           );
         })}
-      </section>
+      </section> */}
     </main>
   );
 }
