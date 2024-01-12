@@ -15,7 +15,10 @@ const getAllPlayers = async () => {
           games: [],
         }));
 
-      const response = await axios.post("/api/all-players", playerData);
+      const response = await axios.post(
+        `${process.env.SERVER_URL}api/all-players`,
+        playerData
+      );
       return response.data;
     } catch (err) {
       console.log(err, "PAGE ERROR");
