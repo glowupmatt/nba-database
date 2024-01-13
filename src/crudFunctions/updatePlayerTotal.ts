@@ -6,9 +6,14 @@ export const updatePlayerTotal = async (
   body: TotalStatsType
 ) => {
   try {
+    const headers = {
+      "Content-Type": "application/json",
+      DATA_API_KEY: process.env.DATA_API_KEY as string,
+    };
     const response = await axios.put(
       `${process.env.SERVER_URL}api/update-player-total/${playerId}`,
-      body
+      body,
+      { headers }
     );
     const data = response;
     return data;

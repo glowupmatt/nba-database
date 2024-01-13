@@ -6,6 +6,10 @@ const getAllPlayers = async () => {
   const players = await getJsonDataTotalForScript();
   const postPlayerData = async (players) => {
     try {
+      const headers = {
+        "Content-Type": "application/json",
+        DATA_API_KEY: process.env.DATA_API_KEY,
+      };
       const playerData = players
         .filter((player) => player.playerName !== undefined)
         .map((player) => ({
@@ -18,7 +22,8 @@ const getAllPlayers = async () => {
 
       const response = await axios.post(
         `${process.env.SERVER_URL}api/all-players-function`,
-        playerData
+        playerData,
+        { headers: headers }
       );
       return response.data;
     } catch (err) {
