@@ -1,7 +1,11 @@
+import { noAuth } from "@/utils/hasAuth";
 import prisma from "@/utils/prismaDb";
 import { NextResponse } from "next/server";
 
 export const POST = async (request: Request) => {
+  if (noAuth(request)) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
   try {
     const body = await request.json();
     const players = await prisma.players.create({

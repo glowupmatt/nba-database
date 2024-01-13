@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/utils/prismaDb";
 import { TotalStatsType } from "@/types/playersType";
+import { noAuth } from "@/utils/hasAuth";
 
 async function createOrUpdateStats(player: any, newStats: any) {
   if (!player?.totalStats[0]) {
@@ -18,6 +19,10 @@ export async function PUT(
   request: Request,
   { params }: { params: { playerId: string } }
 ) {
+  if (noAuth(request)) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
   try {
     const { playerId } = params;
     const body = await request.json();

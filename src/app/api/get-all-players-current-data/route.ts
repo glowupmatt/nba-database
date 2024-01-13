@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import prisma from "@/utils/prismaDb";
+import { noAuth } from "@/utils/hasAuth";
 
 export const GET = async (request: Request) => {
+  if (noAuth(request)) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
   try {
     const players = await prisma.player.findMany({
       include: {
