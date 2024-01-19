@@ -7,8 +7,11 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "getAllPlayers": "node ./src/crudFunctions/scripts/getAllPlayers",
+    "getPlayersTotal": "node ./src/crudFunctions/scripts/getJsonTotalStatsForScript",
     "postallplayers": "node ./src/crudFunctions/scripts/postAllPlayersToDb",
-    "deletePlayers": "node ./src/crudFunctions/scripts/deleteAllPlayers"
+    "deletePlayers": "node ./src/crudFunctions/scripts/deleteAllPlayers",
+    "updatePlayers": "node ./src/crudFunctions/scripts/dailyUpdateCall"
   },
   "dependencies": {
     "@prisma/client": "^5.8.0",

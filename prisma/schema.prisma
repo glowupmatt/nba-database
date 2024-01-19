@@ -71,6 +71,10 @@ model TotalStats {
   blocks              String
   turnovers           String
   points              String
+  freeThrows          String
+  freeThrowAttempts   String
+  steals              String
+  team                String
 
   player   Player @relation("TotalStatsToPlayer", fields: [playerId], references: [id], onDelete: Cascade)
   playerId String @db.ObjectId

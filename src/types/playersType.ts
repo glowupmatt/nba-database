@@ -17,6 +17,7 @@ export type GameType = {
 
 export type TotalStatsType = {
   playerName?: string;
+  team?: string;
   totalGamesPlayed: string;
   totalGamesStarted: string;
   minutesPlayed: string;
@@ -30,6 +31,9 @@ export type TotalStatsType = {
   blocks: string;
   turnovers: string;
   points: string;
+  freeThrows?: String;
+  freeThrowAttempts?: String;
+  steals?: String;
   playerId?: string;
 };
 

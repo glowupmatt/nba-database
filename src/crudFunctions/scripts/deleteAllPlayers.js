@@ -8,7 +8,7 @@ const deleteAllPlayers = async (playerId) => {
     };
     const response = await axios.delete(
       `${process.env.SERVER_URL}api/all-players-function/${playerId}`,
-      { headers }
+      { headers: headers }
     );
     const data = await response;
     return data;
@@ -16,4 +16,4 @@ const deleteAllPlayers = async (playerId) => {
     console.log("Error on deleteAllPlayers");
   }
 };
-deleteAllPlayers("65a196ef74a0033007113d77");
+deleteAllPlayers("65aa13003751cd10fb95cdc2");

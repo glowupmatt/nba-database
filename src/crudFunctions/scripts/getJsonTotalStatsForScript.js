@@ -4,6 +4,7 @@ const axios = require("axios");
 const getJsonDataTotalForScript = async () => {
   const dataSelectors = [
     { name: "playerName", selector: "td[csk]" },
+    { name: "team", selector: "td[data-stat='team_id']" },
     { name: "age", selector: "td[data-stat='age']" },
     { name: "totalGamesPlayed", selector: "td[data-stat='g']" },
     { name: "totalGamesStarted", selector: "td[data-stat='gs']" },
@@ -19,6 +20,9 @@ const getJsonDataTotalForScript = async () => {
     { name: "turnovers", selector: "td[data-stat='tov']" },
     { name: "points", selector: "td[data-stat='pts']" },
     { name: "playerImage", selector: "td[data-append-csv]" },
+    { name: "freeThrows", selector: "td[data-stat='ft']" },
+    { name: "freeThrowAttempts", selector: "td[data-stat='fta']" },
+    { name: "steals", selector: "td[data-stat='stl']" },
   ];
 
   const tableData = [];
@@ -52,4 +56,6 @@ const getJsonDataTotalForScript = async () => {
 
   return tableData;
 };
+getJsonDataTotalForScript();
+
 module.exports = { getJsonDataTotalForScript };

@@ -30,7 +30,12 @@
     ".next/types/**/*.ts",
     "src/crudFunctions/scripts/postAllPlayersToDb.js",
     "src/utils/getJsonDataPerGame.ts",
-    "src/crudFunctions/getJsonTotalStats.js"
+    "src/crudFunctions/getJsonTotalStats.js",
+    "src/crudFunctions/scripts/dailyUpdateCall.js",
+    "src/crudFunctions/scripts/getJsonDataPerGame.js",
+    "src/crudFunctions/updatePlayerTotal.js",
+    "src/crudFunctions/getAllPlayers.js",
+    "src/crudFunctions/updatePlayerGames.js"
   ],
   "exclude": ["node_modules"]
 }
